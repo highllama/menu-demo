@@ -1,0 +1,17 @@
+.mobile-wrapper {
+  width: 100%;
+  max-width: 100dvw;
+  height: 100dvh; /* full height even on desktop */
+  background-color: var(--white);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mobile-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

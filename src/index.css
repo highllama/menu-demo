@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Colors */
+  --primary-color: #ff7a00;
+  --primary-color-hover: #e56b00;
+  --bg-color: #f7f8fa;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-secondary: #7e7e7e;
+  --border-color: #e5e7eb;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  /* Layout */
+  --mobile-width: 414px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color); /* The area outside the mobile view will be slightly grey */
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Center the mobile view on desktop */
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+/* Hide scrollbar for clean UI but allow scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

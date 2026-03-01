@@ -1,0 +1,70 @@
+.recommended-container {
+  padding: 24px 20px;
+  padding-bottom: 20px;
+  min-height: 100%;
+  background-color: var(--white);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  flex: 1;
+  text-align: center;
+}
+
+.back-btn, .filter-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  background-color: transparent;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.back-btn:hover, .filter-icon-btn:hover {
+  background-color: var(--bg-color);
+}
+
+.filter-pills {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.filter-pill {
+  padding: 8px 16px;
+  border-radius: var(--border-radius-xl);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: var(--bg-color);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-pill.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.filter-pill:hover:not(.active) {
+  background-color: #e5e7eb;
+}
+
+.recommended-list {
+  display: flex;
+  flex-direction: column;
+}

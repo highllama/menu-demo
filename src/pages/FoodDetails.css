@@ -1,0 +1,233 @@
+.food-details-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  position: relative;
+}
+
+.details-header {
+  position: absolute;
+  top: 24px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.icon-btn-bg {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.icon-btn-bg:hover {
+  transform: scale(1.05);
+}
+
+.hero-image-wrapper {
+  flex-shrink: 0;
+  height: 40%;
+  width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-content {
+  flex: 1;
+  background-color: var(--white);
+  border-top-left-radius: var(--border-radius-xl);
+  border-top-right-radius: var(--border-radius-xl);
+  margin-top: -30px; /* pull up over image */
+  padding: 30px 24px 100px 24px; /* extra bottom padding for action bar */
+  overflow-y: auto;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.details-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.details-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.details-rating {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.details-rating .star.filled {
+  color: #ffc107;
+}
+
+.reviews-count {
+  margin-left: 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.details-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.details-section {
+  margin-bottom: 24px;
+}
+
+.details-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.details-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.read-more {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-left: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.size-selector {
+  display: flex;
+  gap: 12px;
+}
+
+.size-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.size-btn.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.size-btn:hover:not(.active) {
+  background-color: #e5e7eb;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.qty-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--primary-color);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
+}
+
+.qty-value {
+  font-size: 18px;
+  font-weight: 600;
+  width: 20px;
+  text-align: center;
+}
+
+.details-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: var(--mobile-width);
+  margin: 0 auto;
+  padding: 16px 24px 24px 24px;
+  background-color: var(--white);
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.favorite-btn-large {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.favorite-btn-large:active {
+  transform: scale(0.95);
+}
+
+.add-to-cart-btn {
+  flex: 1;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: var(--border-radius-md);
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--primary-color-hover);
+}
+
+.cart-icon {
+  margin-left: 8px;
+}
