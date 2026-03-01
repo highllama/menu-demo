@@ -1,10 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import MobileWrapper from './components/layout/MobileWrapper';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import MobileWrapper from "./components/layout/MobileWrapper";
 // We'll create these pages shortly
-import Home from './pages/Home';
-import RecommendedList from './pages/RecommendedList';
-import FoodDetails from './pages/FoodDetails';
+import Home from "./pages/Home";
+import RecommendedList from "./pages/RecommendedList";
+import FoodDetails from "./pages/FoodDetails";
 
 function App() {
   return (
