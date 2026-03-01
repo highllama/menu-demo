@@ -20,7 +20,8 @@
   text-align: center;
 }
 
-.back-btn, .filter-icon-btn {
+.back-btn,
+.filter-icon-btn {
   width: 40px;
   height: 40px;
   display: flex;
@@ -32,7 +33,8 @@
   transition: background-color 0.2s ease;
 }
 
-.back-btn:hover, .filter-icon-btn:hover {
+.back-btn:hover,
+.filter-icon-btn:hover {
   background-color: var(--bg-color);
 }
 
@@ -40,8 +42,7 @@
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 16px;
-  margin-bottom: 8px;
+  padding: 16px 20px;
 }
 
 .filter-pill {

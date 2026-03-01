@@ -1,9 +1,10 @@
 .sticky-category-wrapper {
   position: sticky;
   bottom: 0;
-  background-color: var(--bg-color); /* matches body background to hide content scrolling under */
-  padding: 16px 20px 24px 20px; /* more padding on bottom to sit comfortably */
-  margin: 16px -20px 0 -20px; 
+  background-color: var(
+    --bg-color
+  ); /* matches body background to hide content scrolling under */
+  margin: 16px -20px 0 -20px;
   z-index: 50;
   box-shadow: 6px -6px 12px 6px rgba(0, 0, 0, 0.15); /* very soft shadow to separate from content above */
 }
@@ -14,13 +15,12 @@
   display: flex;
   gap: 6px;
   overflow-x: auto;
-  padding-bottom: 8px; /* space for scrollbar/shadows */
 }
 
 .sticky-category-wrapper .filter-pill {
-  padding: 8px 20px;
+  padding: 10px 22px;
   border-radius: var(--border-radius-xl);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-secondary);
   background-color: var(--white);

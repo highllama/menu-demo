@@ -7,12 +7,13 @@ import {
   Plus,
   ShoppingCart,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { flushSync } from "react-dom";
 import "./FoodDetails.css";
 
 const FoodDetails: React.FC = () => {
   const navigate = useNavigate();
-  // const { id } = useParams();
+  const { id } = useParams();
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
@@ -36,11 +37,23 @@ const FoodDetails: React.FC = () => {
   const handleDecrement = () =>
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
+  const handleBack = () => {
+    if (!document.startViewTransition) {
+      navigate(-1);
+      return;
+    }
+    document.startViewTransition(() => {
+      flushSync(() => {
+        navigate(-1);
+      });
+    });
+  };
+
   return (
     <div className="food-details-container">
       {/* Header overlaid on image */}
       <header className="details-header">
-        <button className="icon-btn-bg" onClick={() => navigate(-1)}>
+        <button className="icon-btn-bg" onClick={handleBack}>
           <ArrowLeft size={24} />
         </button>
         <button className="icon-btn-bg">
@@ -50,14 +63,24 @@ const FoodDetails: React.FC = () => {
 
       {/* Hero Image */}
       <div className="hero-image-wrapper">
-        <img src={itemData.image} alt={itemData.title} className="hero-image" />
+        <img
+          src={itemData.image}
+          alt={itemData.title}
+          className="hero-image"
+          style={{ viewTransitionName: `food-image-${id}` }}
+        />
       </div>
 
       {/* Content Sheet */}
       <div className="details-content">
         <div className="details-title-row">
           <div>
-            <h1 className="details-title">{itemData.title}</h1>
+            <h1
+              className="details-title"
+              style={{ viewTransitionName: `food-title-${id}` }}
+            >
+              {itemData.title}
+            </h1>
             <div className="details-rating">
               {Array.from({ length: 5 }).map((_, i) => (
                 <span
