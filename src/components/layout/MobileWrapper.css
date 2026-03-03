@@ -1,7 +1,7 @@
 .mobile-wrapper {
   width: 100%;
   max-width: 100dvw;
-  height: 100dvh; /* full height even on desktop */
+  height: 100dvh;
   background-color: var(--white);
   box-shadow: var(--shadow-md);
   position: relative;

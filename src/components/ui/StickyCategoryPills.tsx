@@ -1,21 +1,95 @@
-import React, { useState } from 'react';
-import './StickyCategoryPills.css';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import "./StickyCategoryPills.css";
 
-const categories = ['Todos', 'Carnes', 'Verduras', 'Postres', 'Sopas', 'Ensaladas', 'Hamburguesas', 'Pizzas', 'Bebidas'];
+interface PillCategory {
+  label: string;
+  sectionId: string; // null for "Todos" — scrolls to top
+}
+
+const categories: PillCategory[] = [
+  { label: "Carnes", sectionId: "cat-carnes" },
+  { label: "Verduras", sectionId: "cat-verduras" },
+  { label: "Postres", sectionId: "cat-postres" },
+  { label: "Sopas", sectionId: "cat-sopas" },
+  { label: "Hamburguesas", sectionId: "cat-hamburguesas" },
+  { label: "Pizzas", sectionId: "cat-pizzas" },
+  { label: "Bebidas", sectionId: "cat-bebidas" },
+];
 
 const StickyCategoryPills: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState('Todos');
+  const [activeLabel, setActiveLabel] = useState("Carnes");
+  const pillsRef = useRef<HTMLDivElement>(null);
+  // ── Scroll to section on click ────────────────────
+  const handleClick = (cat: PillCategory) => {
+    const section = document.getElementById(cat.sectionId);
+    console.log(section);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    setActiveLabel(cat.label);
+  };
+
+  // ── Auto-scroll the pill bar so active pill is visible ──
+  useEffect(() => {
+    if (!pillsRef.current) return;
+    const activeBtn = pillsRef.current.querySelector(
+      ".filter-pill.active",
+    ) as HTMLElement;
+    if (activeBtn) {
+      setTimeout(() => {
+        activeBtn.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }, 1000);
+    }
+  }, [activeLabel]);
+
+  // ── Track scroll position → highlight the right pill ──
+  useEffect(() => {
+    const sectionIds = categories
+      .filter((c) => c.sectionId)
+      .map((c) => c.sectionId as string);
+
+    const scrollContainer = document.querySelector(".mobile-content");
+
+    const handleScroll = () => {
+      // Find the section closest to the top of the viewport
+      let closestId: string | null = null;
+      let closestDistance = Infinity;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 80); // 80px offset for sticky elements
+        if (rect.top <= 200 && distance < closestDistance) {
+          closestDistance = distance;
+          closestId = id;
+        }
+      }
+
+      if (closestId) {
+        const match = categories.find((c) => c.sectionId === closestId);
+        if (match) setActiveLabel(match.label);
+      }
+    };
+
+    scrollContainer?.addEventListener("scroll", handleScroll);
+    return () => scrollContainer?.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="sticky-category-wrapper">
-      <div className="filter-pills hide-scrollbar">
-        {categories.map(cat => (
+      <div className="filter-pills hide-scrollbar" ref={pillsRef}>
+        {categories.map((cat) => (
           <button
-            key={cat}
-            className={`filter-pill ${activeCategory === cat ? 'active' : ''}`}
-            onClick={() => setActiveCategory(cat)}
+            key={cat.label}
+            className={`filter-pill ${activeLabel === cat.label ? "active" : ""}`}
+            onClick={() => handleClick(cat)}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </div>

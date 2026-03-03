@@ -63,12 +63,17 @@ const FoodCard: React.FC<FoodCardProps> = ({
           >
             {title}
           </h4>
-          {kcal && <span className="food-card-kcal">{kcal} kcal</span>}
+          {variant === "horizontal" && (
+            <span className="food-card-kcal">{kcal} kcal</span>
+          )}
         </div>
         {description && <p className="food-card-description">{description}</p>}
         <div style={{ flexGrow: 1 }} />
         <div className="food-card-footer">
           <span className="food-card-price">{price}</span>
+          {variant === "vertical" && kcal && (
+            <span className="food-card-kcal">{kcal} kcal</span>
+          )}
           {variant === "horizontal" && (
             <div className="food-card-actions">
               <button

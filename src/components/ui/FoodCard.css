@@ -91,7 +91,7 @@
 /* Vertical Variant (Home Page Deals) */
 .food-card.vertical {
   min-width: 160px;
-  width: 160px;
+  width: 175px;
 }
 
 .food-card.vertical .food-card-image-wrapper {
