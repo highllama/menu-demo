@@ -31,3 +31,5 @@ const popularItems = [
     variant: "horizontal",
   },
 ];
+
+export default popularItems;
