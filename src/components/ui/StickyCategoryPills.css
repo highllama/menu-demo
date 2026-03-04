@@ -1,6 +1,7 @@
 .sticky-category-wrapper {
-  position: sticky;
+  position: absolute;
   bottom: 0;
+  width: 100dvw;
   background-color: var(
     --bg-color
   ); /* matches body background to hide content scrolling under */

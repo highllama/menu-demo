@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import FoodCard from "../components/ui/FoodCard";
+import FoodDetailsSheet, {
+  type FoodItem,
+} from "../components/ui/FoodDetailsSheet";
 import "./RecommendedList.css";
 
 const RecommendedList: React.FC = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const [selectedItem, setSelectedItem] = useState<FoodItem | null>(null);
 
   const filters = ["Todos", "Sopas", "Pizzas", "Hamburguesas", "Sushi"];
 
@@ -84,9 +88,19 @@ const RecommendedList: React.FC = () => {
 
       <div className="recommended-list">
         {items.map((item) => (
-          <FoodCard key={item.id} {...item} variant="horizontal" />
+          <FoodCard
+            key={item.id}
+            {...item}
+            variant="horizontal"
+            onCardClick={setSelectedItem}
+          />
         ))}
       </div>
+
+      <FoodDetailsSheet
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+      />
     </div>
   );
 };

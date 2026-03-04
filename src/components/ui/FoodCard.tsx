@@ -1,8 +1,7 @@
 import React from "react";
 import { Heart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { flushSync } from "react-dom";
 import "./FoodCard.css";
+import type { FoodItem } from "./FoodDetailsSheet";
 
 interface FoodCardProps {
   id: string;
@@ -12,7 +11,8 @@ interface FoodCardProps {
   price: string;
   kcal?: number;
   isFavorite?: boolean;
-  variant?: "vertical" | "horizontal"; // vertical for home page deals, horizontal for recommended list
+  variant?: "vertical" | "horizontal";
+  onCardClick?: (item: FoodItem) => void;
 }
 
 const FoodCard: React.FC<FoodCardProps> = ({
@@ -24,25 +24,14 @@ const FoodCard: React.FC<FoodCardProps> = ({
   kcal,
   isFavorite = false,
   variant = "vertical",
+  onCardClick,
 }) => {
-  const navigate = useNavigate();
-
   const handleCardClick = () => {
-    if (!document.startViewTransition) {
-      navigate(`/item/${id}`);
-      return;
-    }
-
-    document.startViewTransition(() => {
-      flushSync(() => {
-        navigate(`/item/${id}`);
-      });
-    });
+    onCardClick?.({ id, title, price, image, description, kcal });
   };
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // In a real app, toggle favorite state here
   };
 
   return (

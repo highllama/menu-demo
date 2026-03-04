@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import CartBar from "./CartBar";
+import CartSheet from "./CartSheet";
 import "./StickyCategoryPills.css";
 
 interface PillCategory {
   label: string;
-  sectionId: string; // null for "Todos" — scrolls to top
+  sectionId: string;
 }
 
 const categories: PillCategory[] = [
@@ -18,18 +20,19 @@ const categories: PillCategory[] = [
 
 const StickyCategoryPills: React.FC = () => {
   const [activeLabel, setActiveLabel] = useState("Carnes");
+  const [cartOpen, setCartOpen] = useState(false);
   const pillsRef = useRef<HTMLDivElement>(null);
-  // ── Scroll to section on click ────────────────────
+
+  // ── Scroll to section on click ─────────────────────
   const handleClick = (cat: PillCategory) => {
     const section = document.getElementById(cat.sectionId);
-    console.log(section);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
     setActiveLabel(cat.label);
   };
 
-  // ── Auto-scroll the pill bar so active pill is visible ──
+  // ── Auto-scroll pill bar to keep active pill visible ──
   useEffect(() => {
     if (!pillsRef.current) return;
     const activeBtn = pillsRef.current.querySelector(
@@ -46,16 +49,12 @@ const StickyCategoryPills: React.FC = () => {
     }
   }, [activeLabel]);
 
-  // ── Track scroll position → highlight the right pill ──
+  // ── Track scroll → highlight the right pill ────────
   useEffect(() => {
-    const sectionIds = categories
-      .filter((c) => c.sectionId)
-      .map((c) => c.sectionId as string);
-
+    const sectionIds = categories.map((c) => c.sectionId);
     const scrollContainer = document.querySelector(".mobile-content");
 
     const handleScroll = () => {
-      // Find the section closest to the top of the viewport
       let closestId: string | null = null;
       let closestDistance = Infinity;
 
@@ -63,7 +62,7 @@ const StickyCategoryPills: React.FC = () => {
         const el = document.getElementById(id);
         if (!el) continue;
         const rect = el.getBoundingClientRect();
-        const distance = Math.abs(rect.top - 80); // 80px offset for sticky elements
+        const distance = Math.abs(rect.top - 80);
         if (rect.top <= 200 && distance < closestDistance) {
           closestDistance = distance;
           closestId = id;
@@ -81,19 +80,27 @@ const StickyCategoryPills: React.FC = () => {
   }, []);
 
   return (
-    <div className="sticky-category-wrapper">
-      <div className="filter-pills hide-scrollbar" ref={pillsRef}>
-        {categories.map((cat) => (
-          <button
-            key={cat.label}
-            className={`filter-pill ${activeLabel === cat.label ? "active" : ""}`}
-            onClick={() => handleClick(cat)}
-          >
-            {cat.label}
-          </button>
-        ))}
+    <>
+      <div className="sticky-category-wrapper">
+        {/* Cart summary bar — sits above the pills */}
+        <CartBar onOpen={() => setCartOpen(true)} />
+
+        <div className="filter-pills hide-scrollbar" ref={pillsRef}>
+          {categories.map((cat) => (
+            <button
+              key={cat.label}
+              className={`filter-pill ${activeLabel === cat.label ? "active" : ""}`}
+              onClick={() => handleClick(cat)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Cart sheet */}
+      <CartSheet open={cartOpen} onClose={() => setCartOpen(false)} />
+    </>
   );
 };
 
