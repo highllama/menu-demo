@@ -64,8 +64,8 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
 
   if (!item) return null;
 
-  const rating = item.rating ?? 4.5;
-  const reviews = item.reviews ?? 98;
+  // const rating = item.rating ?? 4.5;
+  // const reviews = item.reviews ?? 98;
 
   return (
     <>
