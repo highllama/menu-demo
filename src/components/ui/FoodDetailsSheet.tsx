@@ -99,15 +99,7 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
             <div>
               <h1 className="details-title">{item.title}</h1>
               <div className="details-rating">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className={`star ${i < Math.floor(rating) ? "filled" : ""}`}
-                  >
-                    ★
-                  </span>
-                ))}
-                <span className="reviews-count">({reviews})</span>
+                <span className="reviews-count">{item.kcal} Kcal</span>
               </div>
             </div>
             <span className="details-price">{item.price}</span>

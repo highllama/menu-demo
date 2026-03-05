@@ -77,7 +77,7 @@
 /* ── Hero image ────────────────────────────────── */
 .sheet-hero-wrapper {
   width: 100%;
-  height: 220px;
+  height: 350px;
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -122,7 +122,6 @@
 }
 
 .reviews-count {
-  margin-left: 6px;
   color: var(--text-secondary);
   font-size: 13px;
 }

@@ -1,12 +1,13 @@
 .sticky-category-wrapper {
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  left: 0;
   width: 100dvw;
   background-color: var(
     --bg-color
   ); /* matches body background to hide content scrolling under */
-  margin: 16px -20px 0 -20px;
   z-index: 50;
+  margin: 0;
   box-shadow: 6px -6px 12px 6px rgba(0, 0, 0, 0.15); /* very soft shadow to separate from content above */
 }
 

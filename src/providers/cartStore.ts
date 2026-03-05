@@ -10,6 +10,7 @@ interface CartState {
   cart: CartItem[];
   addToCart: (item: FoodItem, quantity: number, size: string) => void;
   removeFromCart: (id: string, size: string) => void;
+  updateQuantity: (id: string, size: string, delta: number) => void;
   clearCart: () => void;
   totalItems: () => number;
 }
@@ -39,6 +40,18 @@ const useCartStore = create<CartState>((set, get) => ({
     set((state) => ({
       cart: state.cart.filter((c) => !(c.id === id && c.size === size)),
     })),
+
+  updateQuantity: (id, size, delta) =>
+    set((state) => {
+      const updated = state.cart
+        .map((c) =>
+          c.id === id && c.size === size
+            ? { ...c, quantity: c.quantity + delta }
+            : c,
+        )
+        .filter((c) => c.quantity > 0); // auto-remove when reaches 0
+      return { cart: updated };
+    }),
 
   clearCart: () => set({ cart: [] }),
 

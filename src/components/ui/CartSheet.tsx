@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { X, Trash2, ShoppingCart } from "lucide-react";
+import { X, ShoppingCart, Minus, Plus } from "lucide-react";
 import useCartStore from "../../providers/cartStore";
 import "./CartSheet.css";
 
@@ -10,7 +10,7 @@ interface CartSheetProps {
 
 const CartSheet: React.FC<CartSheetProps> = ({ open, onClose }) => {
   const [visible, setVisible] = useState(false);
-  const { cart, removeFromCart, clearCart } = useCartStore();
+  const { cart, updateQuantity, clearCart } = useCartStore();
 
   useEffect(() => {
     if (open) {
@@ -91,18 +91,25 @@ const CartSheet: React.FC<CartSheetProps> = ({ open, onClose }) => {
                 />
                 <div className="cart-item-info">
                   <p className="cart-item-title">{item.title}</p>
-                  <div className="cart-item-meta">
-                    <span className="cart-item-size">Talla {item.size}</span>
-                    <span className="cart-item-qty">x{item.quantity}</span>
-                  </div>
+                  <span className="cart-item-size">Talla {item.size}</span>
                   <span className="cart-item-price">{item.price}</span>
                 </div>
-                <button
-                  className="cart-item-remove"
-                  onClick={() => removeFromCart(item.id, item.size)}
-                >
-                  <Trash2 size={16} />
-                </button>
+                {/* Quantity controls + remove */}
+                <div className="cart-item-controls">
+                  <button
+                    className="cart-qty-btn"
+                    onClick={() => updateQuantity(item.id, item.size, -1)}
+                  >
+                    <Minus size={13} />
+                  </button>
+                  <span className="cart-qty-value">{item.quantity}</span>
+                  <button
+                    className="cart-qty-btn"
+                    onClick={() => updateQuantity(item.id, item.size, 1)}
+                  >
+                    <Plus size={13} />
+                  </button>
+                </div>
               </div>
             ))
           )}

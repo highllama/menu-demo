@@ -1,5 +1,6 @@
 .home-container {
-  padding: 0 14px;
+  padding: 0 14px 60px 14px;
+  position: relative;
 }
 
 .home-header {

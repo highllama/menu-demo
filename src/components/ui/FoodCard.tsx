@@ -2,6 +2,7 @@ import React from "react";
 import { Heart } from "lucide-react";
 import "./FoodCard.css";
 import type { FoodItem } from "./FoodDetailsSheet";
+import useCartStore from "../../providers/cartStore";
 
 interface FoodCardProps {
   id: string;
@@ -26,6 +27,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
   variant = "vertical",
   onCardClick,
 }) => {
+  const { addToCart } = useCartStore();
   const handleCardClick = () => {
     onCardClick?.({ id, title, price, image, description, kcal });
   };
@@ -79,7 +81,24 @@ const FoodCard: React.FC<FoodCardProps> = ({
                   }
                 />
               </button>
-              <button className="add-btn" onClick={(e) => e.stopPropagation()}>
+              <button
+                className="add-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(
+                    {
+                      id,
+                      title,
+                      price,
+                      image,
+                      description,
+                      kcal,
+                    },
+                    1,
+                    "S",
+                  );
+                }}
+              >
                 AÑADIR
               </button>
             </div>
