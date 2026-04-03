@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Heart, Minus, Plus, ShoppingCart, X } from "lucide-react";
-import useCartStore from "../../providers/cartStore";
+import useCartStore from "../../../providers/cartStore";
 import "./FoodDetailsSheet.css";
 
 export interface FoodItem {

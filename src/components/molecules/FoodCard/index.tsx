@@ -1,8 +1,8 @@
 import React from "react";
 import { Heart } from "lucide-react";
 import "./FoodCard.css";
-import type { FoodItem } from "./FoodDetailsSheet";
-import useCartStore from "../../providers/cartStore";
+import type { FoodItem } from "@/components/molecules/FoodDetailsSheet";
+import useCartStore from "@/providers/cartStore";
 
 interface FoodCardProps {
   id: string;
@@ -54,7 +54,7 @@ const FoodCard: React.FC<FoodCardProps> = ({
           >
             {title}
           </h4>
-          {variant === "horizontal" && (
+          {variant === "horizontal" && kcal && (
             <span className="food-card-kcal">{kcal} kcal</span>
           )}
         </div>

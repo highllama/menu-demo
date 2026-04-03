@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { FoodItem } from "../components/ui/FoodDetailsSheet";
+import type { FoodItem } from "../components/molecules/FoodDetailsSheet";
 
 export interface CartItem extends FoodItem {
   quantity: number;

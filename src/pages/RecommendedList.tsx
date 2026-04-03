@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import FoodCard from "../components/ui/FoodCard";
+import FoodCard from "@/components/molecules/FoodCard";
 import FoodDetailsSheet, {
   type FoodItem,
-} from "../components/ui/FoodDetailsSheet";
+} from "@/components/molecules/FoodDetailsSheet";
 import "./RecommendedList.css";
 
 const RecommendedList: React.FC = () => {
