@@ -9,6 +9,24 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      manifest: {
+        name: "Kalendu Menu",
+        short_name: "Kalendu Menu",
+        description: "Kalendu Menu",
+        theme_color: "#f59e0b",
+        icons: [
+          {
+            src: "/logo.svg",
+            sizes: "192x192",
+            type: "image/svg+xml",
+          },
+          {
+            src: "/logo.svg",
+            sizes: "512x512",
+            type: "image/svg+xml",
+          },
+        ],
+      },
     }),
   ],
   resolve: {
