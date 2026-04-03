@@ -14,28 +14,35 @@ export default defineConfig({
         short_name: "Kalendu Menu",
         description: "Kalendu Menu",
         theme_color: "#f59e0b",
+        background_color: "#f59e0b",
         icons: [
-          {
-            src: "/logo2.svg",
-            sizes: "192x192",
-            type: "image/svg+xml",
-          },
+          // {
+          //   src: "/logo2.svg",
+          //   sizes: "192x192",
+          //   type: "image/svg+xml",
+          // },
           {
             src: "/512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any",
           },
+          {
+            src: "/512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
           // {
           //   src: "/logo2.svg",
           //   sizes: "512x512",
           //   type: "image/svg+xml",
           // },
-          {
-            src: "/448x448.png",
-            sizes: "448x448",
-            type: "image/png",
-          },
+          // {
+          //   src: "/448x448.png",
+          //   sizes: "448x448",
+          //   type: "image/png",
+          // },
         ],
       },
     }),
