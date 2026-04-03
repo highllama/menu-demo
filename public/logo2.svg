@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  viewBox="0 0 56 56"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(38 92% 50%)" />
+      <stop offset="100%" stop-color="hsl(25 95% 55%)" />
+    </linearGradient>
+    <linearGradient id="logoGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="hsl(220 25% 15%)" />
+      <stop offset="100%" stop-color="hsl(225 28% 20%)" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main shape - rounded square -->
+  <rect
+    x="0"
+    y="0"
+    width="56"
+    height="56"
+    rx=""
+    fill="url(#logoGradient)"
+  />
+
+  <!-- K letter stylized -->
+  <path
+    d="M18 16V40 M18 28L32 16 M18 28L34 40"
+    stroke="hsl(220 25% 10%)"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Calendar dots accent -->
+  <circle cx="40" cy="18" r="3" fill="hsl(220 25% 10% / 0.6)" />
+  <circle cx="40" cy="28" r="3" fill="hsl(220 25% 10% / 0.4)" />
+</svg>
