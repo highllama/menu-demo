@@ -13,8 +13,8 @@ export default defineConfig({
         name: "Kalendu Menu",
         short_name: "Kalendu Menu",
         description: "Kalendu Menu",
-        theme_color: "#f59e0b",
-        background_color: "#f59e0b",
+        theme_color: "#ff7a00",
+        background_color: "#ff7a00",
         icons: [
           // {
           //   src: "/logo2.svg",
