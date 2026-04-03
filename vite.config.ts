@@ -25,6 +25,11 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/svg+xml",
           },
+          {
+            src: "/448x448.png",
+            sizes: "448x448",
+            type: "image/png",
+          },
         ],
       },
     }),
