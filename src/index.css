@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
   /* Colors */
@@ -13,8 +13,8 @@
   --black: #000000;
 
   /* Typography */
-  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  
+  --font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+
   /* Layout */
   --mobile-width: 414px;
   --border-radius-sm: 8px;
@@ -35,7 +35,9 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-color); /* The area outside the mobile view will be slightly grey */
+  background-color: var(
+    --bg-color
+  ); /* The area outside the mobile view will be slightly grey */
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,6 +45,7 @@ body {
   display: flex;
   justify-content: center; /* Center the mobile view on desktop */
   min-height: 100vh;
+  width: 100%;
 }
 
 a {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const MenuContext = React.createContext<MenuContextType | null>(null);
@@ -41,25 +41,48 @@ interface Menu {
 const MenuProvider = ({ children }: MenuProviderProps) => {
   const [menu, setMenu] = useState<any>(null);
   const [searchParams] = useSearchParams();
-  const storeId = searchParams.get("storeId");
+  const storeId = searchParams.get("s");
+  const editData = searchParams.get("jsonMenu");
   const getMenu = async (storeId: string) => {
     const response = await fetch(
       `https://kalendu-stores-public.s3.us-west-2.amazonaws.com/${storeId}/menu.json`,
     );
     const data = await response.json();
-    const productsByCategory = data.categories.map((category) => {
-      const products = data.products.filter((product) =>
-        product?.categories?.some((c: any) => c.id === category.id),
-      );
-      return { ...category, products };
-    });
+    const productsByCategory = groupProductsByCategory(
+      data.products,
+      data.categories,
+    );
     setMenu({ ...data, productsByCategory });
   };
+
+  function groupProductsByCategory(products: any[], categories: any[]) {
+    const productsByCategory = categories.map((category) => {
+      const p = products.filter((product) =>
+        product?.categories?.some((c: any) => c.id === category.id),
+      );
+      return { ...category, products: p };
+    });
+    return productsByCategory;
+  }
 
   useEffect(() => {
     if (!storeId) return;
     getMenu(storeId);
   }, [storeId]);
+
+  useEffect(() => {
+    if (!editData) return;
+    try {
+      const data = JSON.parse(atob(editData));
+      const productsByCategory = groupProductsByCategory(
+        data.products,
+        data.categories,
+      );
+      setMenu({ ...data, productsByCategory });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [editData]);
 
   return (
     <MenuContext.Provider value={{ menu, setMenu }}>

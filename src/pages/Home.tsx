@@ -30,10 +30,6 @@ const Home: React.FC = () => {
     }
   }, [menu?.theme]);
 
-  useEffect(() => {
-    alert(JSON.stringify(document.head.innerHTML));
-  }, []);
-
   return (
     <div
       className="home-container"

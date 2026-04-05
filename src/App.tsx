@@ -10,9 +10,9 @@ function App() {
       <MenuProvider>
         <MobileWrapper>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/menu" element={<Home />} />
             <Route path="/recommended" element={<RecommendedList />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/menu" replace />} />
           </Routes>
         </MobileWrapper>
       </MenuProvider>
