@@ -98,9 +98,9 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
           <div className="details-title-row">
             <div>
               <h1 className="details-title">{item.title}</h1>
-              <div className="details-rating">
+              {/* <div className="details-rating">
                 <span className="reviews-count">{item.kcal} Kcal</span>
-              </div>
+              </div> */}
             </div>
             <span className="details-price">{item.price}</span>
           </div>
@@ -108,13 +108,13 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
           {/* Description */}
           {item.description && (
             <div className="details-section">
-              <h3>Descripción</h3>
+              {/* <h3>Descripción</h3> */}
               <p className="details-description">{item.description}</p>
             </div>
           )}
 
           {/* Size */}
-          <div className="details-section">
+          {/* <div className="details-section">
             <h3>Tamaño</h3>
             <div className="size-selector">
               {sizes.map((size) => (
@@ -127,10 +127,10 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
                 </button>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Quantity */}
-          <div className="details-section">
+          <div className="details-section ">
             <h3>Cantidad</h3>
             <div className="quantity-selector">
               <button

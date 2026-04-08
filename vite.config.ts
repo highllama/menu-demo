@@ -7,45 +7,45 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   plugins: [
     react(),
-    VitePWA({
-      registerType: "autoUpdate",
-      manifest: {
-        name: "Kalendu Menu",
-        short_name: "Kalendu Menu",
-        description: "Kalendu Menu",
-        theme_color: "#ff7a00",
-        background_color: "#ff7a00",
-        icons: [
-          // {
-          //   src: "/logo2.svg",
-          //   sizes: "192x192",
-          //   type: "image/svg+xml",
-          // },
-          {
-            src: "/512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any",
-          },
-          {
-            src: "/512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
-          // {
-          //   src: "/logo2.svg",
-          //   sizes: "512x512",
-          //   type: "image/svg+xml",
-          // },
-          // {
-          //   src: "/448x448.png",
-          //   sizes: "448x448",
-          //   type: "image/png",
-          // },
-        ],
-      },
-    }),
+    // VitePWA({
+    //   registerType: "autoUpdate",
+    //   manifest: {
+    //     name: "Kalendu Menu",
+    //     short_name: "Kalendu Menu",
+    //     description: "Kalendu Menu",
+    //     theme_color: "#ff7a00",
+    //     background_color: "#ff7a00",
+    //     icons: [
+    //       // {
+    //       //   src: "/logo2.svg",
+    //       //   sizes: "192x192",
+    //       //   type: "image/svg+xml",
+    //       // },
+    //       {
+    //         src: "/512.png",
+    //         sizes: "512x512",
+    //         type: "image/png",
+    //         purpose: "any",
+    //       },
+    //       {
+    //         src: "/512.png",
+    //         sizes: "512x512",
+    //         type: "image/png",
+    //         purpose: "maskable",
+    //       },
+    //       // {
+    //       //   src: "/logo2.svg",
+    //       //   sizes: "512x512",
+    //       //   type: "image/svg+xml",
+    //       // },
+    //       // {
+    //       //   src: "/448x448.png",
+    //       //   sizes: "448x448",
+    //       //   type: "image/png",
+    //       // },
+    //     ],
+    //   },
+    // }),
   ],
   resolve: {
     alias: {
