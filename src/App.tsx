@@ -5,18 +5,10 @@ import RecommendedList from "./pages/RecommendedList";
 import MenuProvider from "./providers/MenuProvider";
 import { useEffect, useRef } from "react";
 import isPWA from "./utils/isPWA";
-import { useSearchParams } from "react-router-dom";
 
 function App() {
-  // const [searchParams] = useSearchParams();
-  // const storeSlug = searchParams.get("s");
   const subscribed = useRef(false);
   useEffect(() => {
-    const manifestLink = document.createElement("link");
-    manifestLink.rel = "manifest";
-    // manifestLink.href = `${import.meta.env.VITE_S3_PUBLIC_BASE}/${storeSlug}/pwa/manifest.webmanifest`;
-    // document.head.appendChild(manifestLink);
-
     if (!isPWA()) {
       return;
     }
