@@ -5,10 +5,11 @@ import RecommendedList from "./pages/RecommendedList";
 import MenuProvider from "./providers/MenuProvider";
 import { useEffect, useRef, useState } from "react";
 import NotificationsPrompt from "./components/molecules/NotificationsPrompt";
+import { useSearchParams } from "react-router-dom";
 
 function App() {
   const subscribed = useRef(false);
-  const searchParams = new URLSearchParams(window.location.search);
+  const [searchParams] = useSearchParams();
   const storeSlug = searchParams.get("s");
   const isPWA = searchParams.get("pwa") === "true";
   const [showNotifPrompt, setShowNotifPrompt] = useState(false);
@@ -64,26 +65,32 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <MenuProvider>
-        <MobileWrapper>
-          <Routes>
-            <Route path="/menu" element={<Home />} />
-            <Route path="/recommended" element={<RecommendedList />} />
-            <Route path="*" element={<Navigate to="/menu" replace />} />
-          </Routes>
-        </MobileWrapper>
-        {isPWA && showNotifPrompt && (
-          <NotificationsPrompt
-            onAccept={() => {
-              setShowNotifPrompt(false);
-              subscribeToPush();
-            }}
-          />
-        )}
-      </MenuProvider>
-    </BrowserRouter>
+    <MenuProvider>
+      <MobileWrapper>
+        <Routes>
+          <Route path="/menu" element={<Home />} />
+          <Route path="/recommended" element={<RecommendedList />} />
+          <Route path="*" element={<Navigate to="/menu" replace />} />
+        </Routes>
+      </MobileWrapper>
+      {isPWA && showNotifPrompt && (
+        <NotificationsPrompt
+          onAccept={() => {
+            setShowNotifPrompt(false);
+            subscribeToPush();
+          }}
+        />
+      )}
+    </MenuProvider>
   );
 }
 
-export default App;
+const Wrapper = () => {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+};
+
+export default Wrapper;
