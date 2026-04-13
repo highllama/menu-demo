@@ -3,6 +3,7 @@ import { Heart } from "lucide-react";
 import "./FoodCard.css";
 import type { FoodItem } from "@/components/molecules/FoodDetailsSheet";
 import useCartStore from "@/providers/cartStore";
+import useLikedProducts from "@/hooks/useLikedProducts";
 
 interface FoodCardProps {
   id: string;
@@ -14,6 +15,7 @@ interface FoodCardProps {
   isFavorite?: boolean;
   variant?: "vertical" | "horizontal";
   onCardClick?: (item: FoodItem) => void;
+  disabled?: boolean;
 }
 
 const FoodCard: React.FC<FoodCardProps> = ({
@@ -26,18 +28,25 @@ const FoodCard: React.FC<FoodCardProps> = ({
   isFavorite = false,
   variant = "vertical",
   onCardClick,
+  onFavoriteClick,
+  disabled,
+  oos,
 }) => {
   const { addToCart } = useCartStore();
   const handleCardClick = () => {
-    onCardClick?.({ id, title, price, image, description, kcal });
+    onCardClick?.({ id, title, price, image, description, kcal, oos });
   };
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    onFavoriteClick?.();
   };
 
   return (
-    <div className={`food-card ${variant}`} onClick={handleCardClick}>
+    <div
+      className={`food-card ${variant} ${disabled ? "opacity-50" : ""}`}
+      onClick={handleCardClick}
+    >
       <div className="food-card-image-wrapper">
         <img
           src={image}

@@ -8,6 +8,7 @@ import isPWA from "./utils/isPWA";
 
 function App() {
   const subscribed = useRef(false);
+  const storeSlug = new URLSearchParams(window.location.search).get("s");
   useEffect(() => {
     if (!isPWA()) {
       return;
@@ -18,10 +19,8 @@ function App() {
       }
       subscribed.current = true;
       const registration = await navigator.serviceWorker.ready;
-      debugger;
       // Get public key from your server
       const API_URL = import.meta.env.VITE_API_URL;
-      console.log(API_URL);
       const response = await fetch(`${API_URL}/pushNotifications/getPublicKey`);
       const { publicKey } = await response.json();
 
@@ -31,10 +30,20 @@ function App() {
       });
       console.log(subscription);
 
+      const body = {
+        subscription,
+        storeSlug,
+        deviceInfo: {
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          hardwareConcurrency: navigator.hardwareConcurrency,
+        },
+      };
       // Send subscription to server
       await fetch(`${API_URL}/pushNotifications/subscribe`, {
         method: "POST",
-        body: JSON.stringify(subscription),
+        body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
       });
     }

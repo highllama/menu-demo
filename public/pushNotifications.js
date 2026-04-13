@@ -8,8 +8,8 @@ self.addEventListener("push", (event) => {
 
   const options = {
     body: data.body,
-    icon: "/512.png",
-    badge: "/512.png",
+    icon: data.icon || "/512.png",
+    badge: data.badge || "/512.png",
     data: {
       url: data.url || "/", // Custom data to open a specific link
     },

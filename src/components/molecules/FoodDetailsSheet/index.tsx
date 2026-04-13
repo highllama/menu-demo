@@ -30,6 +30,7 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
   const [selectedSize, setSelectedSize] = useState("M");
   const [isFavorite, setIsFavorite] = useState(false);
   const [added, setAdded] = useState(false);
+  const outOfStock = item?.oos;
 
   const addToCart = useCartStore((s) => s.addToCart);
   const store = useCartStore();
@@ -130,24 +131,26 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
           </div> */}
 
           {/* Quantity */}
-          <div className="details-section ">
-            <h3>Cantidad</h3>
-            <div className="quantity-selector">
-              <button
-                className="qty-btn"
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-              >
-                <Minus size={16} />
-              </button>
-              <span className="qty-value">{quantity}</span>
-              <button
-                className="qty-btn add"
-                onClick={() => setQuantity((q) => q + 1)}
-              >
-                <Plus size={16} />
-              </button>
+          {!outOfStock && (
+            <div className="details-section ">
+              <h3>Cantidad</h3>
+              <div className="quantity-selector">
+                <button
+                  className="qty-btn"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                >
+                  <Minus size={16} />
+                </button>
+                <span className="qty-value">{quantity}</span>
+                <button
+                  className="qty-btn add"
+                  onClick={() => setQuantity((q) => q + 1)}
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Bottom action bar */}
@@ -165,12 +168,18 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
             />
           </button>
           <button
-            className={`add-to-cart-btn ${added ? "added" : ""}`}
+            className={`add-to-cart-btn ${added ? "added" : ""} ${outOfStock ? "opacity-50" : ""}`}
             onClick={handleAddToCart}
-            disabled={added}
+            disabled={added || outOfStock}
           >
-            {added ? "✓ Añadido" : "AGREGAR AL CARRITO"}
-            {!added && <ShoppingCart size={20} className="cart-icon" />}
+            {!added && !outOfStock && (
+              <ShoppingCart size={20} className="cart-icon" />
+            )}
+            {added
+              ? "✓ Añadido"
+              : outOfStock
+                ? "AGOTADO"
+                : "AGREGAR AL CARRITO"}
           </button>
         </div>
       </div>

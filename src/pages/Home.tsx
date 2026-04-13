@@ -12,6 +12,7 @@ import "./Home.css";
 // import extraCategories from "../data/categoriesWithProducts";
 import { useMenuProvider } from "../providers/MenuProvider/useMenuProvider";
 import formatPrice from "@/utils/formatPrice";
+import useLikedProducts from "@/hooks/useLikedProducts";
 
 const Home: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<FoodItem | null>(null);
@@ -19,6 +20,8 @@ const Home: React.FC = () => {
   const hasCart = cartCount > 0;
   const { menu } = useMenuProvider();
   const featuredProducts = menu?.products?.filter((p) => p?.featured) ?? [];
+  const { likedProducts, toggleLikedProduct } = useLikedProducts();
+  console.log(likedProducts, "likes");
   console.log(menu);
 
   useEffect(() => {
@@ -62,6 +65,7 @@ const Home: React.FC = () => {
           <div className="deals-list">
             {featuredProducts.map((product) => (
               <FoodCard
+                disabled={product?.oos}
                 key={product.id}
                 id={product.id}
                 title={product.name}
@@ -69,8 +73,10 @@ const Home: React.FC = () => {
                 description={product.description}
                 kcal={product.kcal}
                 image={product?.files?.at(0)?.url}
-                isFavorite={product.isFavorite}
+                isFavorite={likedProducts.includes(product.id)}
                 onCardClick={setSelectedItem}
+                onFavoriteClick={() => toggleLikedProduct(product.id)}
+                oos={product?.oos}
               />
             ))}
           </div>
@@ -88,6 +94,7 @@ const Home: React.FC = () => {
             <div className="vertical-list">
               {cat?.products?.map((item) => (
                 <FoodCard
+                  disabled={item?.oos}
                   key={item.id}
                   id={item.id}
                   title={item.name}
@@ -97,6 +104,9 @@ const Home: React.FC = () => {
                   image={item?.files?.at(0)?.url}
                   variant="horizontal"
                   onCardClick={setSelectedItem}
+                  onFavoriteClick={() => toggleLikedProduct(item.id)}
+                  oos={item?.oos}
+                  isFavorite={likedProducts.includes(item.id)}
                 />
               ))}
             </div>

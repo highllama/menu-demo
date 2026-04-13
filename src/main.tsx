@@ -4,7 +4,10 @@ import "./index.css";
 import "./App.css";
 import App from "./App.tsx";
 
-if ("serviceWorker" in navigator) {
+const query = new URLSearchParams(window.location.search);
+const isInIframe = query.get("iframe") === "true";
+console.log(isInIframe, "ifrmae");
+if (!isInIframe && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/pushNotifications.js", { scope: "/" })
