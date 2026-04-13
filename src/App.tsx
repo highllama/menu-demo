@@ -3,24 +3,21 @@ import MobileWrapper from "./components/layout/MobileWrapper";
 import Home from "./pages/Home";
 import RecommendedList from "./pages/RecommendedList";
 import MenuProvider from "./providers/MenuProvider";
-import { useEffect, useRef } from "react";
-import isPWA from "./utils/isPWA";
+import { useEffect, useRef, useState } from "react";
+import NotificationsPrompt from "./components/molecules/NotificationsPrompt";
 
 function App() {
   const subscribed = useRef(false);
-  const storeSlug = new URLSearchParams(window.location.search).get("s");
-  useEffect(() => {
-    console.log(isPWA());
-    // if (!isPWA()) {
-    //   return;
-    // }
-    async function subscribeToPush() {
-      if (subscribed.current) {
-        return;
-      }
-      subscribed.current = true;
+  const searchParams = new URLSearchParams(window.location.search);
+  const storeSlug = searchParams.get("s");
+  const isPWA = searchParams.get("pwa") === "true";
+  const [showNotifPrompt, setShowNotifPrompt] = useState(false);
+
+  const subscribeToPush = async () => {
+    if (subscribed.current) return;
+    subscribed.current = true;
+    try {
       const registration = await navigator.serviceWorker.ready;
-      // Get public key from your server
       const API_URL = import.meta.env.VITE_API_URL;
       const response = await fetch(`${API_URL}/pushNotifications/getPublicKey`);
       const { publicKey } = await response.json();
@@ -29,7 +26,6 @@ function App() {
         userVisibleOnly: true,
         applicationServerKey: publicKey,
       });
-      console.log(subscription);
 
       const body = {
         subscription,
@@ -41,25 +37,29 @@ function App() {
           hardwareConcurrency: navigator.hardwareConcurrency,
         },
       };
-      // Send subscription to server
       await fetch(`${API_URL}/pushNotifications/subscribe`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
       });
+    } catch (err) {
+      console.error("Push subscription failed", err);
     }
+  };
 
-    // Trigger this based on a UI action or app load
-    console.log(window?.Notification?.permission, "notifstatus");
+  useEffect(() => {
+    if (!isPWA) return;
+    const permission = window?.Notification?.permission;
     if (
       window?.Notification &&
-      ["default", "granted", undefined].includes(
-        window?.Notification?.permission,
-      )
+      (permission === "default" || permission === undefined)
     ) {
-      setTimeout(() => {
-        subscribeToPush();
-      }, 3000);
+      // Show our custom prompt after a short delay
+      const t = setTimeout(() => setShowNotifPrompt(true), 3000);
+      return () => clearTimeout(t);
+    }
+    if (permission === "granted") {
+      subscribeToPush();
     }
   }, []);
 
@@ -73,6 +73,14 @@ function App() {
             <Route path="*" element={<Navigate to="/menu" replace />} />
           </Routes>
         </MobileWrapper>
+        {isPWA && showNotifPrompt && (
+          <NotificationsPrompt
+            onAccept={() => {
+              setShowNotifPrompt(false);
+              subscribeToPush();
+            }}
+          />
+        )}
       </MenuProvider>
     </BrowserRouter>
   );
