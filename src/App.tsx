@@ -51,10 +51,15 @@ function App() {
 
     // Trigger this based on a UI action or app load
     console.log(window?.Notification?.permission, "notifstatus");
-    if (window?.Notification?.permission === "default") {
+    if (
+      window?.Notification &&
+      ["default", "granted", undefined].includes(
+        window?.Notification?.permission,
+      )
+    ) {
       setTimeout(() => {
         subscribeToPush();
-      }, 1000);
+      }, 3000);
     }
   }, []);
 
