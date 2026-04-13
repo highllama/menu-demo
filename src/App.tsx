@@ -10,9 +10,10 @@ function App() {
   const subscribed = useRef(false);
   const storeSlug = new URLSearchParams(window.location.search).get("s");
   useEffect(() => {
-    if (!isPWA()) {
-      return;
-    }
+    console.log(isPWA());
+    // if (!isPWA()) {
+    //   return;
+    // }
     async function subscribeToPush() {
       if (subscribed.current) {
         return;
@@ -49,8 +50,8 @@ function App() {
     }
 
     // Trigger this based on a UI action or app load
-    console.log(Notification.permission);
-    if (Notification.permission === "default") {
+    console.log(window?.Notification?.permission, "notifstatus");
+    if (window?.Notification?.permission === "default") {
       setTimeout(() => {
         subscribeToPush();
       }, 1000);
