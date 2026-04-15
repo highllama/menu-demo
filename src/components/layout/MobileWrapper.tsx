@@ -1,14 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import "./MobileWrapper.css";
-import { useSearchParams } from "react-router-dom";
+import useStoreSlug from "@/hooks/useStoreSlug";
 
 interface MobileWrapperProps {
   children: React.ReactNode;
 }
 
 const MobileWrapper: React.FC<MobileWrapperProps> = ({ children }) => {
-  const [searchParams] = useSearchParams();
-  const storeSlug = searchParams.get("s");
+  const storeSlug = useStoreSlug();
   const mounted = useRef(false);
 
   useEffect(() => {
