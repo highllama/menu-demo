@@ -11,7 +11,7 @@ self.addEventListener("push", (event) => {
     icon: data.icon || "/512.png",
     badge: data.badge || "/512.png",
     data: {
-      url: data.url || "/", // Custom data to open a specific link
+      url: data.url || "/menu", // Custom data to open a specific link
     },
     requireInteraction: true,
   };

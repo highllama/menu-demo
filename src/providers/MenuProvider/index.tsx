@@ -1,5 +1,6 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import useStoreSlug from "../../hooks/useStoreSlug";
 
 export const MenuContext = React.createContext<MenuContextType | null>(null);
 
@@ -40,9 +41,8 @@ interface Menu {
 
 const MenuProvider = ({ children }: MenuProviderProps) => {
   const [menu, setMenu] = useState<any>(null);
+  const storeId = useStoreSlug();
   const [searchParams] = useSearchParams();
-  const storeId = searchParams.get("s");
-  console.log("fetching", storeId);
   const editData = searchParams.get("jsonMenu");
   const getMenu = async (storeId: string) => {
     const response = await fetch(

@@ -10,7 +10,9 @@ import { useSearchParams } from "react-router-dom";
 function App() {
   const subscribed = useRef(false);
   const [searchParams] = useSearchParams();
-  const storeSlug = searchParams.get("s");
+  const subDomain = window.location?.hostname?.split(".")?.at(0);
+  const storeSlug =
+    subDomain !== "localhost" ? subDomain : searchParams.get("s");
   const isPWA = searchParams.get("pwa") === "true";
   const [showNotifPrompt, setShowNotifPrompt] = useState(false);
   console.log(searchParams, storeSlug, isPWA);
