@@ -21,6 +21,9 @@ const Home: React.FC = () => {
   const { menu } = useMenuProvider();
   const featuredProducts = menu?.products?.filter((p) => p?.featured) ?? [];
   const { likedProducts, toggleLikedProduct } = useLikedProducts();
+  const likedProductsData = menu?.products?.filter((p) =>
+    likedProducts.includes(p.id),
+  );
   console.log(likedProducts, "likes");
   console.log(menu);
 
@@ -54,34 +57,71 @@ const Home: React.FC = () => {
       <CategoryTabs />
 
       {/* Special Deals Section */}
-      <section className="section">
-        <div className="section-header">
-          <h3>Destacados</h3>
-          {/* <NavLink to="/recommended" className="see-all-link">
+      {featuredProducts?.length > 0 && (
+        <section className="section">
+          <div className="section-header">
+            <h3>Destacados</h3>
+            {/* <NavLink to="/recommended" className="see-all-link">
             Ver todo
           </NavLink> */}
-        </div>
-        <div className="horizontal-scroll-container hide-scrollbar">
-          <div className="deals-list">
-            {featuredProducts.map((product) => (
-              <FoodCard
-                disabled={product?.oos}
-                key={product.id}
-                id={product.id}
-                title={product.name}
-                price={formatPrice(product.price)}
-                description={product.description}
-                kcal={product.kcal}
-                image={product?.files?.at(0)?.url}
-                isFavorite={likedProducts.includes(product.id)}
-                onCardClick={setSelectedItem}
-                onFavoriteClick={() => toggleLikedProduct(product.id)}
-                oos={product?.oos}
-              />
-            ))}
           </div>
-        </div>
-      </section>
+          <div className="horizontal-scroll-container hide-scrollbar">
+            <div className="deals-list">
+              {featuredProducts.map((product) => (
+                <FoodCard
+                  disabled={product?.oos}
+                  key={product.id}
+                  id={product.id}
+                  title={product.name}
+                  price={formatPrice(product.price)}
+                  description={product.description}
+                  kcal={product.kcal}
+                  image={product?.files?.at(0)?.url}
+                  isFavorite={likedProducts.includes(product.id)}
+                  onCardClick={setSelectedItem}
+                  onFavoriteClick={() => toggleLikedProduct(product.id)}
+                  oos={product?.oos}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Liked Products Section */}
+      {likedProductsData?.length > 0 && (
+        <section className="section">
+          <div className="section-header">
+            <h3>Tus Favoritos</h3>
+            {/* <NavLink to="/recommended" className="see-all-link">
+            Ver todo
+          </NavLink> */}
+          </div>
+          <div className="horizontal-scroll-container hide-scrollbar">
+            <div className="deals-list">
+              {likedProducts
+                .map((id) => menu?.products?.find((p) => p.id === id))
+                .filter((product) => product !== undefined)
+                .map((product) => (
+                  <FoodCard
+                    disabled={product?.oos}
+                    key={product.id}
+                    id={product.id}
+                    title={product.name}
+                    price={formatPrice(product.price)}
+                    description={product.description}
+                    kcal={product.kcal}
+                    image={product?.files?.at(0)?.url}
+                    isFavorite={likedProducts.includes(product.id)}
+                    onCardClick={setSelectedItem}
+                    onFavoriteClick={() => toggleLikedProduct(product.id)}
+                    oos={product?.oos}
+                  />
+                ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Category Sections */}
       {menu?.productsByCategory
