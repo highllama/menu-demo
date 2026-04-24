@@ -15,7 +15,7 @@ const MobileWrapper: React.FC<MobileWrapperProps> = ({ children }) => {
     mounted.current = true;
     const manifestLink = document.createElement("link");
     manifestLink.rel = "manifest";
-    manifestLink.href = `${import.meta.env.VITE_S3_PUBLIC_BASE}/${storeSlug}/pwa/manifest.webmanifest`;
+    manifestLink.href = `${import.meta.env.VITE_CLOUDFRONT_PUBLIC}/${storeSlug}/pwa/manifest.webmanifest`;
     document.head.appendChild(manifestLink);
   }, [storeSlug]);
 

@@ -6,7 +6,6 @@ import App from "./App.tsx";
 
 const query = new URLSearchParams(window.location.search);
 const isInIframe = query.get("iframe") === "true";
-console.log(isInIframe, "ifrmae");
 if (!isInIframe && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker

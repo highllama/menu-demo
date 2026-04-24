@@ -15,7 +15,6 @@ function App() {
     subDomain !== "localhost" ? subDomain : searchParams.get("s");
   const isPWA = searchParams.get("pwa") === "true";
   const [showNotifPrompt, setShowNotifPrompt] = useState(false);
-  console.log(searchParams, storeSlug, isPWA);
 
   const subscribeToPush = async () => {
     if (subscribed.current) return;

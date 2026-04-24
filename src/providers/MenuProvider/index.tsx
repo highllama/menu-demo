@@ -44,16 +44,19 @@ const MenuProvider = ({ children }: MenuProviderProps) => {
   const storeId = useStoreSlug();
   const [searchParams] = useSearchParams();
   const editData = searchParams.get("jsonMenu");
+  const location = searchParams.get("l");
+  const URL = import.meta.env.VITE_CLOUDFRONT_PUBLIC;
+
   const getMenu = async (storeId: string) => {
-    const response = await fetch(
-      `https://kalendu-stores-public.s3.us-west-2.amazonaws.com/${storeId}/menu.json`,
-    );
+    const response = await fetch(`${URL}/${storeId}/menu.json`);
     const data = await response.json();
-    const productsByCategory = groupProductsByCategory(
-      data.products,
-      data.categories,
-    );
-    setMenu({ ...data, productsByCategory });
+    return data;
+  };
+
+  const getMenuStock = async (storeId: string, locationId: string) => {
+    const response = await fetch(`${URL}/${storeId}/stocks/${locationId}`);
+    const data = await response.json();
+    return data;
   };
 
   function groupProductsByCategory(products: any[], categories: any[]) {
@@ -67,9 +70,29 @@ const MenuProvider = ({ children }: MenuProviderProps) => {
   }
 
   useEffect(() => {
-    if (!storeId) return;
-    getMenu(storeId);
-  }, [storeId]);
+    const loadData = async () => {
+      if (!storeId) return;
+      let promises = [getMenu(storeId)];
+      if (location) {
+        promises.push(getMenuStock(storeId, location));
+      }
+      const [data, stock] = await Promise.all(promises);
+      if (stock?.products) {
+        data.products = data.products.filter((product) => {
+          const stockProduct = stock.products.find(
+            (s: any) => s.id === product.id,
+          );
+          return stockProduct?.available;
+        });
+      }
+      const productsByCategory = groupProductsByCategory(
+        data.products,
+        data.categories,
+      );
+      setMenu({ ...data, productsByCategory });
+    };
+    loadData();
+  }, [storeId, location]);
 
   useEffect(() => {
     if (!editData) return;
