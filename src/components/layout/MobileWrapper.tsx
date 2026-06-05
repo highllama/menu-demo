@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./MobileWrapper.css";
 import useStoreSlug from "@/hooks/useStoreSlug";
+import InstallPwaBanner from "../molecules/InstallPwaBanner";
 
 interface MobileWrapperProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ const MobileWrapper: React.FC<MobileWrapperProps> = ({ children }) => {
 
   return (
     <div className="mobile-wrapper">
+      <InstallPwaBanner />
       <div className="mobile-content">{children}</div>
     </div>
   );
