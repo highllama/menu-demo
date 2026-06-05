@@ -91,7 +91,6 @@ const CartSheet: React.FC<CartSheetProps> = ({ open, onClose }) => {
                 />
                 <div className="cart-item-info">
                   <p className="cart-item-title">{item.title}</p>
-                  <span className="cart-item-size">Talla {item.size}</span>
                   <span className="cart-item-price">{item.price}</span>
                 </div>
                 {/* Quantity controls + remove */}
