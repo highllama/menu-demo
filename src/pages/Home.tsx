@@ -46,11 +46,13 @@ const Home: React.FC = () => {
         {/* <div className="section-header" style={{ marginTop: "2rem" }}>
           <h3>Ofertas Especiales</h3>
         </div> */}
-        <PromoBanner
-          title={menu?.banner?.title ?? ""}
-          discount={menu?.banner?.subtitle ?? ""}
-          image={menu?.banner?.files?.at(0)?.url ?? ""}
-        />
+        {menu?.banner?.files?.length > 0 && (
+          <PromoBanner
+            title={menu?.banner?.title ?? ""}
+            discount={menu?.banner?.subtitle ?? ""}
+            image={menu?.banner?.files?.at(0)?.url ?? ""}
+          />
+        )}
       </section>
 
       {/* Categories */}

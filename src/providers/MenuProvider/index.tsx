@@ -97,7 +97,7 @@ const MenuProvider = ({ children }: MenuProviderProps) => {
   useEffect(() => {
     if (!editData) return;
     try {
-      const data = JSON.parse(atob(editData));
+      const data = JSON.parse(fromBase64(editData));
       const productsByCategory = groupProductsByCategory(
         data.products,
         data.categories,
@@ -116,3 +116,12 @@ const MenuProvider = ({ children }: MenuProviderProps) => {
 };
 
 export default MenuProvider;
+
+function fromBase64(str) {
+  return decodeURIComponent(
+    atob(str)
+      .split("")
+      .map((c) => "%" + c.charCodeAt(0).toString(16).padStart(2, "0"))
+      .join(""),
+  );
+}

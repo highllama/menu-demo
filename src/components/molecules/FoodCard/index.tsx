@@ -3,7 +3,6 @@ import { Heart } from "lucide-react";
 import "./FoodCard.css";
 import type { FoodItem } from "@/components/molecules/FoodDetailsSheet";
 import useCartStore from "@/providers/cartStore";
-import useLikedProducts from "@/hooks/useLikedProducts";
 
 interface FoodCardProps {
   id: string;
@@ -16,6 +15,8 @@ interface FoodCardProps {
   variant?: "vertical" | "horizontal";
   onCardClick?: (item: FoodItem) => void;
   disabled?: boolean;
+  onFavoriteClick: (id: string) => void;
+  oos: boolean;
 }
 
 const FoodCard: React.FC<FoodCardProps> = ({
@@ -39,19 +40,23 @@ const FoodCard: React.FC<FoodCardProps> = ({
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onFavoriteClick?.();
+    onFavoriteClick?.(id);
   };
+
+  const isVertical = variant === "vertical";
 
   return (
     <div
-      className={`food-card ${variant} ${disabled ? "opacity-50" : ""}`}
+      className={`food-card ${variant} ${disabled ? "opacity-50" : ""} min-h-[140px]`}
       onClick={handleCardClick}
     >
-      <div className="food-card-image-wrapper">
+      <div
+        className={`w-full ${!isVertical ? "max-w-[140px]" : ""} ${!isVertical ? "aspect-4/3" : ""} `}
+      >
         <img
           src={image}
           alt={title}
-          className="food-card-img"
+          className={`w-full h-full  object-cover ${!isVertical ? "aspect-4/3 min-h-13" : "aspect-video"}`}
           style={{ viewTransitionName: `food-image-${id}` }}
         />
       </div>
@@ -67,7 +72,9 @@ const FoodCard: React.FC<FoodCardProps> = ({
             <span className="food-card-kcal">{kcal} kcal</span>
           )}
         </div>
-        {description && <p className="food-card-description">{description}</p>}
+        {description && (
+          <p className="food-card-description line-clamp-3">{description}</p>
+        )}
         <div style={{ flexGrow: 1 }} />
         <div className="food-card-footer">
           <span className="food-card-price">{price}</span>
