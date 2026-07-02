@@ -51,12 +51,12 @@ const FoodCard: React.FC<FoodCardProps> = ({
       onClick={handleCardClick}
     >
       <div
-        className={`w-full ${!isVertical ? "max-w-[140px]" : ""} ${!isVertical ? "aspect-4/3" : ""} `}
+        className={`w-full ${!isVertical ? "max-w-[140px]" : ""} ${!isVertical ? "" : ""} `}
       >
         <img
           src={image}
           alt={title}
-          className={`w-full h-full  object-cover ${!isVertical ? "aspect-4/3 min-h-13" : "aspect-video"}`}
+          className={`w-full h-full  object-cover ${!isVertical ? " min-h-13" : "aspect-video"}`}
           style={{ viewTransitionName: `food-image-${id}` }}
         />
       </div>
