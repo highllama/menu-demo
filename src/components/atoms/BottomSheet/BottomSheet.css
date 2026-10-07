@@ -30,7 +30,7 @@
   flex-direction: column;
   transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .food-details-sheet.sheet-open {
@@ -214,7 +214,7 @@
   background-color: var(--white);
   display: flex;
   gap: 16px;
-  align-items: stretch;
+  /* align-items: stretch; */
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 }

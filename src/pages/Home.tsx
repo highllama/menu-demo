@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import CategoryTabs from "../components/ui/CategoryTabs";
-import StickyCategoryPills from "../components/ui/StickyCategoryPills";
-import PromoBanner from "../components/ui/PromoBanner";
+import CategoryTabs from "../components/uiV2/CategoryTabs";
+import StickyCategoryPills from "../components/uiV2/StickyCategoryPills";
+import PromoBanner from "../components/uiV2/PromoBanner";
 import FoodCard from "@/components/molecules/FoodCard";
 import FoodDetailsSheet, {
   type FoodItem,

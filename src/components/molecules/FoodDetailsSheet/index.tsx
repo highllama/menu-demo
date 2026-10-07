@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Heart, Minus, Plus, ShoppingCart, X } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import useCartStore from "../../../providers/cartStore";
 import "./FoodDetailsSheet.css";
+import Button from "@/components/atoms/Button";
+import ModifierGroup from "@/components/molecules/ModifierGroup";
+import { useMenuProvider } from "@/providers/MenuProvider/useMenuProvider";
 
 export interface FoodItem {
   id: string;
@@ -19,8 +22,6 @@ interface FoodDetailsSheetProps {
   onClose: () => void;
 }
 
-const sizes = ["S", "M", "L", "XL"];
-
 const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
   item,
   onClose,
@@ -28,13 +29,16 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
   const [visible, setVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
-  const [isFavorite, setIsFavorite] = useState(false);
   const [added, setAdded] = useState(false);
   const outOfStock = item?.oos;
+  const { menu } = useMenuProvider();
+  const modifierGroups =
+    menu?.modifiers?.filter((modifierGroup: any) =>
+      modifierGroup.productIds.includes(item?.id),
+    ) ?? [];
+  console.log(modifierGroups);
 
   const addToCart = useCartStore((s) => s.addToCart);
-  const store = useCartStore();
-  console.log(store.cart);
 
   // Animate in when item is set
   useEffect(() => {
@@ -42,7 +46,6 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
       // Small delay so the initial render paints before transition
       requestAnimationFrame(() => setVisible(true));
       setQuantity(1);
-      setSelectedSize("M");
     } else {
       setVisible(false);
     }
@@ -55,7 +58,7 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
 
   const handleAddToCart = () => {
     if (!item) return;
-    addToCart(item, quantity, selectedSize);
+    addToCart(item, quantity, "");
     setAdded(true);
     setTimeout(() => {
       setAdded(false);
@@ -64,9 +67,6 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
   };
 
   if (!item) return null;
-
-  // const rating = item.rating ?? 4.5;
-  // const reviews = item.reviews ?? 98;
 
   return (
     <>
@@ -78,7 +78,7 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
 
       {/* Bottom sheet */}
       <div
-        className={`food-details-sheet ${visible ? "sheet-open" : "sheet-closed"}`}
+        className={`food-details-sheet relative ${visible ? "sheet-open" : "sheet-closed"}`}
       >
         {/* Drag handle */}
         {/* <div className="sheet-handle" /> */}
@@ -89,73 +89,45 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
         </button>
 
         {/* Hero image */}
-        <div className="sheet-hero-wrapper">
+        <div className="h-full overflow-y-auto pb-[80px] shadow-lg drop-shadow-gray-100">
           <img src={item.image} alt={item.title} className="sheet-hero-img" />
-        </div>
 
-        {/* Scrollable content */}
-        <div className="sheet-content">
-          {/* Title row */}
-          <div className="details-title-row">
-            <div>
-              <h1 className="details-title">{item.title}</h1>
-              {/* <div className="details-rating">
+          {/* Scrollable content */}
+          <div className="py-4 px-4 ">
+            {/* Title row */}
+            <div className="details-title-row">
+              <div>
+                <h1 className="font-bold text-3xl">{item.title}</h1>
+                {/* <div className="details-rating">
                 <span className="reviews-count">{item.kcal} Kcal</span>
               </div> */}
-            </div>
-            <span className="details-price">{item.price}</span>
-          </div>
-
-          {/* Description */}
-          {item.description && (
-            <div className="details-section">
-              {/* <h3>Descripción</h3> */}
-              <p className="details-description">{item.description}</p>
-            </div>
-          )}
-
-          {/* Size */}
-          {/* <div className="details-section">
-            <h3>Tamaño</h3>
-            <div className="size-selector">
-              {sizes.map((size) => (
-                <button
-                  key={size}
-                  className={`size-btn ${selectedSize === size ? "active" : ""}`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div> */}
-
-          {/* Quantity */}
-          {!outOfStock && (
-            <div className="details-section ">
-              <h3>Cantidad</h3>
-              <div className="quantity-selector">
-                <button
-                  className="qty-btn"
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                >
-                  <Minus size={16} />
-                </button>
-                <span className="qty-value">{quantity}</span>
-                <button
-                  className="qty-btn add"
-                  onClick={() => setQuantity((q) => q + 1)}
-                >
-                  <Plus size={16} />
-                </button>
               </div>
+              <span className="font-semibold text-2xl">{item.price}</span>
             </div>
-          )}
+
+            {/* Description */}
+            {item.description && (
+              <div className="details-section">
+                {/* <h3>Descripción</h3> */}
+                <p className="text-md text-gray-500">{item.description}</p>
+              </div>
+            )}
+
+            {modifierGroups.map((modifierGroup: any) => (
+              <ModifierGroup
+                key={modifierGroup.id}
+                modifiers={modifierGroup.modifiers}
+                name={modifierGroup.name}
+                minSelections={modifierGroup.minSelections}
+                maxSelections={modifierGroup.maxSelections}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Bottom action bar */}
-        <div className="sheet-bottom-bar">
-          <button
+        <div className="flex items-center gap-4 py-4 px-4 absolute bottom-0 left-0 right-0 bg-white ">
+          {/* <button
             className={`favorite-btn-large ${isFavorite ? "active" : ""}`}
             onClick={() => setIsFavorite((f) => !f)}
           >
@@ -166,21 +138,34 @@ const FoodDetailsSheet: React.FC<FoodDetailsSheetProps> = ({
                 isFavorite ? "var(--primary-color)" : "var(--text-secondary)"
               }
             />
-          </button>
-          <button
-            className={`add-to-cart-btn ${added ? "added" : ""} ${outOfStock ? "opacity-50" : ""}`}
+          </button> */}
+          {/* Quantity */}
+          {!outOfStock && (
+            <div className=" items-center h-full">
+              <div className="quantity-selector">
+                <Button
+                  className="qty-btn h-full"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                >
+                  <Minus size={16} />
+                </Button>
+                <span className="qty-value">{quantity}</span>
+                <button
+                  className="qty-btn add"
+                  onClick={() => setQuantity((q) => q + 1)}
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+          <Button
+            className={`add-to-cart-btn py-6 px-4  ${added ? "added" : ""} ${outOfStock ? "opacity-50" : ""}`}
             onClick={handleAddToCart}
             disabled={added || outOfStock}
           >
-            {!added && !outOfStock && (
-              <ShoppingCart size={20} className="cart-icon" />
-            )}
-            {added
-              ? "✓ Añadido"
-              : outOfStock
-                ? "AGOTADO"
-                : "AGREGAR AL CARRITO"}
-          </button>
+            {added ? "✓ Añadido" : outOfStock ? "AGOTADO" : "AÑADIR"}
+          </Button>
         </div>
       </div>
     </>
